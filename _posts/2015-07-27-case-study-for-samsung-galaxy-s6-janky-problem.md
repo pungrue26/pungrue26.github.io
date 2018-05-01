@@ -72,19 +72,23 @@ categories:
   먼저 최대한 동일한 조건에서 두 기기를 비교하기 위해 같은 OS 버전(5.1.1)의 넥5와 갤6 엣지(모델명 SM-G925S)를 준비했습니다. 또 JVM 즉, Java 레벨에서 걸리는 시간을 동일하게 통제하기 위해 동일한 소스 코드의 앱을 실험에 사용하기로 했고, <a href="https://github.com/udacity/Sunshine-Version-2">유다시티 선샤인 앱</a>을 실험용 앱으로 선택했습니다. 선샤인 앱은 소스코드가 공개돼 있어서 다른 분들이 테스트해보기에도 좋기 때문입니다. 두 기기에 선샤인 앱을 설치해서 실행시킨 뒤, 위아래로 빠르게 스크롤을 해보니 역시 넥5에서는 부드럽게 화면이 넘어갔지만, 갤6에서는 거의 모든 프레임이 그려지는데 16ms가 넘게 걸렸습니다.
 </p>
 
+<p style="text-align: center;">
 (넥서스5 선샤인 앱 메인 액티비티 GPU 렌더링)
+</p>
 
-![alt text](https://i.imgur.com/RJhO3R5.png "넥서스5 선샤인 앱 메인 액티비티 GPU 렌더링")
+<a href="https://i.imgur.com/RJhO3R5"><img src="https://i.imgur.com/RJhO3R5.png" alt="nexus5_gpu_rendering" width="1024" height="576" srcset="https://i.imgur.com/RJhO3R5.png 1024w, https://i.imgur.com/RJhO3R5h.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
+<p style="text-align: center;">
 (갤럭시 S6 선샤인 앱 메인 액티비티 GPU 렌더링)
+</p>
 
-![alt text](https://i.imgur.com/Hx6dCJ1.png "갤럭시 S6 선샤인 앱 메인 액티비티 GPU 렌더링")
+<a href="i.imgur.com/Hx6dCJ1"><img src="i.imgur.com/Hx6dCJ1.png" alt="galaxy_s6_gpu_rendering" width="1024" height="576" srcset="i.imgur.com/Hx6dCJ1.png 1024w, i.imgur.com/Hx6dCJ1l.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   이어서 Systrace 툴을 실행시켜 두 기기를 분석해 보았습니다. 태그 옵션으로는 Graphics, Input, View System, CPU Scheduling을 선택하였습니다. 또 구체적인 OpenGL 명령들을 파악하기 위해 개발자 옵션에서 OpenGL 추적 사용 설정을 Systrace로 활성화하였습니다. 결과 파일을 공유합니다. <a href="https://www.dropbox.com/s/tr0acc8r133b9e4/trace_sunshine_nexus5_with_gl.html?dl=0">넥서스 5 Systrace 결과</a>, <a href="https://www.dropbox.com/s/fne2o4dr9ffn5w3/trace_sunshine_samsung_with_gl.html?dl=0">갤럭시6 Systrace 결과</a>.
 </p>
 
-![alt text](https://i.imgur.com/rqLpt3q.png "opengl_systrace2")
+<a href="i.imgur.com/rqLpt3q"><img src="i.imgur.com/rqLpt3q.png" alt="opengl_systrace2" srcset="i.imgur.com/rqLpt3q.png 1024w, i.imgur.com/rqLpt3q.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   Systrace의 결과는 GPU 렌더링 프로필을 확인시켜줌과 동시에, GPU 안에서 일어나는 일들에 대해 좀 더 자세히 알려주었습니다. 참고로, <a href="http://developer.android.com/about/versions/lollipop.html">안드로이드 롤리팝부터는 메인 쓰레드 외에 렌더 쓰레드가 추가</a>되었고, OpenGL 명령들은 이 렌더쓰레드에서 수행됩니다.  렌더쓰레드는 Systrace 결과 화면에서 가장 아래 행에 나타나는데 넥서스 5에서는 대부분의 DrawFrame 과정이 10ms 이내에 끝나는데 비해 갤6에서는 대부분 16ms를 조금 넘는 시간이 걸림을 확인할 수 있었습니다.
@@ -92,7 +96,7 @@ categories:
 
 (넥서스5 선샤인 Systrace)
 
-![alt text](https://i.imgur.com/ZuirFGY.png "넥서스5 선샤인 Systrace")
+<a href="i.imgur.com/ZuirFGYh"><img src="i.imgur.com/ZuirFGYh.png" alt="넥서스5 선샤인 Systrace" srcset="i.imgur.com/ZuirFGYh.png 1024w, i.imgur.com/ZuirFGYh.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 (갤럭시 S6 선샤인 Systrace)
 
