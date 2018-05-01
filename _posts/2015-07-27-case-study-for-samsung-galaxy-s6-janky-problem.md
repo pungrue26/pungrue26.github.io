@@ -82,25 +82,29 @@ categories:
 (갤럭시 S6 선샤인 앱 메인 액티비티 GPU 렌더링)
 </p>
 
-<a href="i.imgur.com/Hx6dCJ1"><img src="i.imgur.com/Hx6dCJ1.png" alt="galaxy_s6_gpu_rendering" width="1024" height="576" srcset="i.imgur.com/Hx6dCJ1.png 1024w, i.imgur.com/Hx6dCJ1l.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+<a href="https://i.imgur.com/Hx6dCJ1"><img src="https://i.imgur.com/Hx6dCJ1.png" alt="galaxy_s6_gpu_rendering" width="1024" height="576" srcset="https://i.imgur.com/Hx6dCJ1.png 1024w, i.imgur.com/Hx6dCJ1l.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   이어서 Systrace 툴을 실행시켜 두 기기를 분석해 보았습니다. 태그 옵션으로는 Graphics, Input, View System, CPU Scheduling을 선택하였습니다. 또 구체적인 OpenGL 명령들을 파악하기 위해 개발자 옵션에서 OpenGL 추적 사용 설정을 Systrace로 활성화하였습니다. 결과 파일을 공유합니다. <a href="https://www.dropbox.com/s/tr0acc8r133b9e4/trace_sunshine_nexus5_with_gl.html?dl=0">넥서스 5 Systrace 결과</a>, <a href="https://www.dropbox.com/s/fne2o4dr9ffn5w3/trace_sunshine_samsung_with_gl.html?dl=0">갤럭시6 Systrace 결과</a>.
 </p>
 
-<a href="i.imgur.com/rqLpt3q"><img src="i.imgur.com/rqLpt3q.png" alt="opengl_systrace2" srcset="i.imgur.com/rqLpt3q.png 1024w, i.imgur.com/rqLpt3q.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+<a href="https://i.imgur.com/rqLpt3q"><img src="https://i.imgur.com/rqLpt3q.png" alt="opengl_systrace2" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   Systrace의 결과는 GPU 렌더링 프로필을 확인시켜줌과 동시에, GPU 안에서 일어나는 일들에 대해 좀 더 자세히 알려주었습니다. 참고로, <a href="http://developer.android.com/about/versions/lollipop.html">안드로이드 롤리팝부터는 메인 쓰레드 외에 렌더 쓰레드가 추가</a>되었고, OpenGL 명령들은 이 렌더쓰레드에서 수행됩니다.  렌더쓰레드는 Systrace 결과 화면에서 가장 아래 행에 나타나는데 넥서스 5에서는 대부분의 DrawFrame 과정이 10ms 이내에 끝나는데 비해 갤6에서는 대부분 16ms를 조금 넘는 시간이 걸림을 확인할 수 있었습니다.
 </p>
 
+<center>
 (넥서스5 선샤인 Systrace)
+</center>
 
-<a href="i.imgur.com/ZuirFGYh"><img src="i.imgur.com/ZuirFGYh.png" alt="넥서스5 선샤인 Systrace" srcset="i.imgur.com/ZuirFGYh.png 1024w, i.imgur.com/ZuirFGYh.png 300w" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+<a href="https://i.imgur.com/ZuirFGYh"><img src="https://i.imgur.com/ZuirFGYh.png" alt="넥서스5 선샤인 Systrace" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
+<center>
 (갤럭시 S6 선샤인 Systrace)
+</center>
 
-![alt text](https://i.imgur.com/yClq98K.png "갤럭시 S6 선샤인 Systrace")
+<a href="https://i.imgur.com/yClq98K"><img src="https://i.imgur.com/yClq98K.png" alt="갤럭시 S6 선샤인 Systrace" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   그런데 보시는 것처럼 DrawFrame을 끝내는데 걸리는 시간이 16ms를 약간 초과하는 정도이기 때문에, 사실 선샤인 앱에서는 육안으로 화면 끊김 현상을 잘 느끼기는 어렵습니다(그리고 갤럭시 S6의 화면 갱신 주기가 얼마인지와도 관련됩니다. <a href="https://youtu.be/Q8m9sHdyXnE?t=16m11s">모든 안드로이드 기기가 60Hz로 화면을 갱신하지는 않으며 몇 Hz로 화면을 갱신하는지는 기기마다 다릅니다</a>). 하지만 그것은 선샤인 앱이 Best practice로 만들어진 앱이고, 아주 간단한 앱이기 때문입니다. 다른 앱에서도 테스트해본 결과, 플레이 스토어 앱이나 심지어 설정 앱 같은 아주 간단한 앱에서조차 빠르게 스크롤을 내리면 프레임 rate가 떨어짐을 확인할 수 있었습니다.
