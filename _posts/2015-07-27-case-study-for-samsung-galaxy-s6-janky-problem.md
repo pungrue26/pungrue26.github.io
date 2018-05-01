@@ -1,17 +1,5 @@
----
-id: 352
-title: 삼성 갤럭시 S6(및 6 엣지)에서 화면 끊김 현상이 발생하는 원인에 대한 사례 연구 (1)
-date: 2015-07-27T00:30:55+00:00
-author: pungrue26@gmail.com
-layout: post
-guid: http://www.joooooooooonhokim.com/?p=352
-permalink: /2015/07/27/case-study-for-samsung-galaxy-s6-janky-problem/
-categories:
-  - Android
----
+# 삼성 갤럭시 S6(및 6 엣지)에서 화면 끊김 현상이 발생하는 원인에 대한 사례 연구 (1)
 
-삼성 갤럭시 S6(및 6 엣지)에서 화면 끊김 현상이 발생하는 원인에 대한 사례 연구 (1)
-======
 
 ## 요약 :
 
@@ -88,7 +76,7 @@ categories:
   이어서 Systrace 툴을 실행시켜 두 기기를 분석해 보았습니다. 태그 옵션으로는 Graphics, Input, View System, CPU Scheduling을 선택하였습니다. 또 구체적인 OpenGL 명령들을 파악하기 위해 개발자 옵션에서 OpenGL 추적 사용 설정을 Systrace로 활성화하였습니다. 결과 파일을 공유합니다. <a href="https://www.dropbox.com/s/tr0acc8r133b9e4/trace_sunshine_nexus5_with_gl.html?dl=0">넥서스 5 Systrace 결과</a>, <a href="https://www.dropbox.com/s/fne2o4dr9ffn5w3/trace_sunshine_samsung_with_gl.html?dl=0">갤럭시6 Systrace 결과</a>.
 </p>
 
-<a href="https://i.imgur.com/rqLpt3q"><img src="https://i.imgur.com/rqLpt3q.png" alt="opengl_systrace2" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+<a href="https://i.imgur.com/fTbcMYk"><img src="https://i.imgur.com/fTbcMYk.png" alt="opengl_systrace2" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <p class="note" style="text-align: left;">
   Systrace의 결과는 GPU 렌더링 프로필을 확인시켜줌과 동시에, GPU 안에서 일어나는 일들에 대해 좀 더 자세히 알려주었습니다. 참고로, <a href="http://developer.android.com/about/versions/lollipop.html">안드로이드 롤리팝부터는 메인 쓰레드 외에 렌더 쓰레드가 추가</a>되었고, OpenGL 명령들은 이 렌더쓰레드에서 수행됩니다.  렌더쓰레드는 Systrace 결과 화면에서 가장 아래 행에 나타나는데 넥서스 5에서는 대부분의 DrawFrame 과정이 10ms 이내에 끝나는데 비해 갤6에서는 대부분 16ms를 조금 넘는 시간이 걸림을 확인할 수 있었습니다.
@@ -98,7 +86,7 @@ categories:
 (넥서스5 선샤인 Systrace)
 </center>
 
-<a href="https://i.imgur.com/ZuirFGYh"><img src="https://i.imgur.com/ZuirFGYh.png" alt="넥서스5 선샤인 Systrace" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
+<a href="https://i.imgur.com/sc7WdW5"><img src="https://i.imgur.com/sc7WdW5.png" alt="넥서스5 선샤인 Systrace" sizes="(max-width: 1024px) 100vw, 1024px" /></a>
 
 <center>
 (갤럭시 S6 선샤인 Systrace)
